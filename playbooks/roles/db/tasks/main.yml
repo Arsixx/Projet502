@@ -1,0 +1,16 @@
+---
+- name: Démarrer le conteneur de base de données
+  docker_image: "{{ db_image }}"
+  docker_container:
+    name: db-server
+    environment:
+      - MYSQL_ROOT_PASSWORD="{{ db_password }}"
+      - MYSQL_DATABASE="{{ db_name }}"
+    volumes:
+      - db-data:/var/lib/mysql
+  notify:
+    - initialize database
+
+- name: Initialiser la base de données
+  shell: docker exec -i db-server mysql -u root -p"{{ db_password }}" < init.sql
+  when: notified with 'initialize database'

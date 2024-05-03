@@ -1,0 +1,21 @@
+version: '3'
+services:
+  master:
+    build:
+      context: .
+      dockerfile: ./master.Dockerfile
+    working_dir: /root/playbooks
+    volumes:
+      - C:\Users\admin\Documents\SAE502\playbooks:/root/playbooks
+      - C:\Users\admin\Documents\SAE502\config:/etc/ansible
+    command: tail -f /dev/null
+    
+  web:
+    build:
+      context: .
+      dockerfile: ./server.Dockerfile
+
+  db:
+    build:
+      context: .
+      dockerfile: ./server.Dockerfile

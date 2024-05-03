@@ -1,0 +1,19 @@
+---
+- name: Installer et configurer Apache
+  docker_image: "{{ apache_image }}"
+  docker_container:
+    name: apache-server
+    ports:
+      - "80:80"
+    volumes:
+      - ./html:/var/www/html
+    environment:
+      - APACHE_HOSTNAME={{ ansible_hostname }}
+  notify:
+    - restart apache
+
+- name: Redémarrer Apache
+  docker_container:
+    name: apache-server
+    state: restarted
+  when: notified with 'restart apache'

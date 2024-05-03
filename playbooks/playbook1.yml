@@ -1,0 +1,13 @@
+---
+- name: Déployer un serveur Apache et une base de données
+  hosts: all
+  become: true
+  vars:
+    apache_image: httpd:latest
+    db_image: mysql:latest
+    db_name: mydatabase
+    db_user: root
+    db_password: password
+  tasks:
+    - include_role: apache
+    - include_role: db
